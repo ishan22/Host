@@ -174,30 +174,17 @@ def get_time(date):
         else:
             return int(fixed_time) + 12
     return fixed_time
-days = {
-    'sunday': ['sunday','sun'],
-    'monday': ['monday', 'mon'],
-    'tuesday': ['tuesday', 'tue', 'tues'],
-    'wednesday': ['wednesday', 'wed'],
-    'thursday': ['thursday', 'thurs', 'thur', 'thu'],
-    'friday': ['friday', 'fri'],
-    'saturday': ['saturday', 'sat']
-}
-months = {
-    'january': ['january', 'jan'],
-    'february': ['february', 'feb'],
-    'march': ['march', 'mar'],
-    'april': ['april', 'apr'],
-    'may': ['may'],
-    'june': ['june', 'jun'],
-    'july': ['july', 'jul'],
-    'august': ['august', 'aug'],
-    'september': ['september', 'sept', 'sep'],
-    'october': ['october', 'oct'],
-    'november': ['november', 'nov'],
-    'december': ['december', 'dec']
-}
+
 def get_day(date):
+    days = {
+        'sunday': ['sunday','sun'],
+        'monday': ['monday', 'mon'],
+        'tuesday': ['tuesday', 'tue', 'tues'],
+        'wednesday': ['wednesday', 'wed'],
+        'thursday': ['thursday', 'thurs', 'thur', 'thu'],
+        'friday': ['friday', 'fri'],
+        'saturday': ['saturday', 'sat']
+    }
     date = date.lower()
     for day in days:
         for tweak in days[day]:
@@ -205,6 +192,20 @@ def get_day(date):
                 return day
     return ''
 def get_month(date):
+    months = {
+        'january': ['january', 'jan'],
+        'february': ['february', 'feb'],
+        'march': ['march', 'mar'],
+        'april': ['april', 'apr'],
+        'may': ['may'],
+        'june': ['june', 'jun'],
+        'july': ['july', 'jul'],
+        'august': ['august', 'aug'],
+        'september': ['september', 'sept', 'sep'],
+        'october': ['october', 'oct'],
+        'november': ['november', 'nov'],
+        'december': ['december', 'dec']
+    }
     date = date.lower()
     for month in months:
         for tweak in months[month]:
