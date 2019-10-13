@@ -18,6 +18,7 @@ import os
 import sys
 import time
 import datefinder
+import re
 
 os.environ["COMPUTER_VISION_SUBSCRIPTION_KEY"] = 'a6f152d25bd04b25a831b7a17fdfa594'
 os.environ["COMPUTER_VISION_ENDPOINT"] = 'https://seamlessevents.cognitiveservices.azure.com/'
@@ -51,7 +52,8 @@ else:
 computervision_client = ComputerVisionClient(endpoint_cv, CognitiveServicesCredentials(subscription_key_cv))
 text_analytics = TextAnalyticsClient(endpoint, credentials=credentials)
 
-def get_data(input_data):
+def getData(input_data):
+    image_url = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/event-poster-template-e6771eeb0763814b21d0144eb8e91bdb.jpg?ts=1561498807'
     recognize_printed_results = computervision_client.batch_read_file_in_stream(input_data,  raw=True)
 
     # Get the operation location (URL with an ID at the end) from the response
@@ -74,17 +76,17 @@ def get_data(input_data):
                 full_text += line.text + '\n'
 
     documents = [
-        {
-            "id": "1",
-            "language": "en",
-            "text": full_text
-        }
+    {
+        "id": "1",
+        "language": "en",
+        "text": full_text
+    }
     ]
 
     e_details = {
-        "title": '',
-        "date": '',
-        "time_range": ''
+    "title": '',
+    "date": '',
+    "time_range": ''
     }
 
     title = ""
@@ -119,4 +121,109 @@ def get_data(input_data):
             for match in entity.matches:
                 print("\t\t\tOffset: ", match.offset, "\tLength: ", match.length, "\tScore: ",
                       "{:.2f}".format(match.entity_type_score))
+    date = e_details['date']
+    new_date = '';
+    new_date +=  str(get_time(earlier_time(date))) + ' '
+    new_date += get_day(date) + ' '
+    new_date += get_month(date)
+    new_date += get_date(date)
+    matches = datefinder.find_dates(date.lower())
+    e_details['standard'] = matches
     return e_details
+
+
+def earlier_time(time):
+    if "am" in time.lower():
+        list_of_words = time.lower().split('am')
+        print(list_of_words)
+        first_am = list_of_words[0].split()[-1]
+        if len(list_of_words) == 3:
+            second_am = list_of_words[1].split()[-1]
+            if first_am[0] > second_am[0]:
+                return second_am + "am"
+            else:
+                return first_am + "am"
+        if "pm" in list_of_words[1]:
+            return first_am + "am"
+        else:
+            return first_am
+    elif "pm" in time.lower():
+        list_of_words = time.lower().split('pm')
+        first_pm = list_of_words[0].split()[-1]
+        if len(list_of_words) == 3:
+            second_pm = list_of_words[1].split()[-1]
+            if first_pm[0] > second_pm[0]:
+                return second_pm + "pm"
+            else:
+                return first_pm + "pm"
+        else:
+            return first_pm
+
+def get_time(date):
+    date = date.lower()
+    fixed_time = 0
+    if 'am' in date:
+        list_of_words = date.split('am')
+        fixed_time = list_of_words[0].split()[-1]
+    elif 'pm' in date.lower():
+        list_of_words = date.split('pm')
+        fixed_time = list_of_words[0].split()[-1]
+        if ':' in fixed_time:
+            split_time = fixed_time.split(':')
+            split_time[0] = str(int(split_time[0]) + 12)
+            return ':'.join(split_time)
+        else:
+            return int(fixed_time) + 12
+    return fixed_time
+days = {
+    'sunday': ['sunday','sun'],
+    'monday': ['monday', 'mon'],
+    'tuesday': ['tuesday', 'tue', 'tues'],
+    'wednesday': ['wednesday', 'wed'],
+    'thursday': ['thursday', 'thurs', 'thur', 'thu'],
+    'friday': ['friday', 'fri'],
+    'saturday': ['saturday', 'sat']
+}
+months = {
+    'january': ['january', 'jan'],
+    'february': ['february', 'feb'],
+    'march': ['march', 'mar'],
+    'april': ['april', 'apr'],
+    'may': ['may'],
+    'june': ['june', 'jun'],
+    'july': ['july', 'jul'],
+    'august': ['august', 'aug'],
+    'september': ['september', 'sept', 'sep'],
+    'october': ['october', 'oct'],
+    'november': ['november', 'nov'],
+    'december': ['december', 'dec']
+}
+def get_day(date):
+    date = date.lower()
+    for day in days:
+        for tweak in days[day]:
+            if tweak in date:
+                return day
+    return ''
+def get_month(date):
+    date = date.lower()
+    for month in months:
+        for tweak in months[month]:
+            if tweak in date:
+                return month
+    return ''
+def get_date(date):
+    date = date.lower()
+    split_list = date.split()
+    aux_list = []
+    for word in split_list:
+        if not 'pm' in word and not 'am' in word and not ':' in word and not 'to' in word:
+            aux_list.append(word)
+            print(word)
+
+    for word in aux_list:
+        print(word)
+        word2 = ''.join(i for i in word if i.isdigit())
+        if word2.isdigit() and (int(word2) > 0 and int(word2) < 32):
+            return word2
+    return ''
