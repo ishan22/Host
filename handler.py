@@ -93,7 +93,7 @@ def get_data(input_data):
     for text_result in get_printed_text_results.recognition_results:
         for line in text_result.lines:
             box = line.bounding_box
-            curr_area = box[5] - box[1]
+            curr_area = abs(box[7] - box[1])
             if curr_area > big_area + threshold:
                 title = line.text
                 big_area = curr_area
