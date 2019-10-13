@@ -9,7 +9,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def hello_world():
-    return 'hello world'
+    return 'welcome to <strong>seamless.</strong>'
 
 @app.route('/scan/<path:imgpath>')
 def scan(imgpath):
