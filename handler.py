@@ -148,6 +148,7 @@ def earlier_time(time):
             return first_am
     elif "pm" in time.lower():
         list_of_words = time.lower().split('pm')
+        print(list_of_words)
         first_pm = list_of_words[0].split()[-1]
         if len(list_of_words) == 3:
             second_pm = list_of_words[1].split()[-1]
