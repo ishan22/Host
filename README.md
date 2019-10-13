@@ -1,2 +1,2 @@
-# Host
-A collaborative playlist
+# SeamlessEvents
+A seamless event manager.
