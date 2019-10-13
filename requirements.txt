@@ -2,5 +2,7 @@ requests
 flask
 Werkzeug
 dateparser
+datefinder
+msrest
 azure-cognitiveservices-vision-computervision
 azure-cognitiveservices-language-textanalytics
