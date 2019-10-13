@@ -23,8 +23,11 @@ def scan():
     ret = handler.getData(image)
     #print(ret['standard'])
     dates = list(ret['standard'])
+    date = ''
+    time = ''
     print(dates)
-    date = dates[0].date
-    time = dates[0].time
+    if len(dates) != 0:
+        date = str(dates[0].date)
+        time = str(dates[0].time)
     conc = "&{}|&{}|&{}".format(ret["title"], date, time)
     return conc
