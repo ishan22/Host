@@ -19,7 +19,7 @@ def scan():
     data = request.json
     print(data)
     with open("image.png", "wb") as fh:
-        fh.write(base64.decodebytes(data["data"]))
+        fh.write(base64.decodestring(data["data"]))
     return "success"
 
 @app.route('/scan2', methods=['POST'])
