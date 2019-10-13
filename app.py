@@ -1,5 +1,6 @@
 import handler
 import os
+import io
 
 from base64 import b64decode
 from flask import Flask, url_for, request, redirect
