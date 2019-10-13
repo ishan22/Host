@@ -129,7 +129,7 @@ def getData(input_data):
     new_date += get_day(date) + ' '
     new_date += get_month(date)
     new_date += get_date(date)
-    matches = datefinder.find_dates(date.lower())
+    matches = datefinder.find_dates(new_date.lower())
     e_details['standard'] = matches
     return e_details
 
