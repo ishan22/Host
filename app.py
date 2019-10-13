@@ -1,7 +1,7 @@
 import handler
 import os
-import base64
 
+from base64 import b64decode
 from flask import Flask, url_for, request, redirect
 from werkzeug.utils import secure_filename
 
@@ -18,8 +18,10 @@ def hello_world():
 def scan():
     data = request.json
     print(data)
-    with open("image.png", "wb") as fh:
-        fh.write(base64.decodestring(data["data"]))
+    image = BytesIO(b64decode(re.sub("data:image/png;base64", '', data["data"])))
+    print(image)
+    #with open("image.png", "wb") as fh:
+     #   fh.write(base64.decodebytes(bytes(data["data"])))
     return "success"
 
 @app.route('/scan2', methods=['POST'])
