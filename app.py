@@ -15,10 +15,11 @@ app = Flask(__name__)
 def hello_world():
     return 'welcome to <strong>seamless.</strong>'
 
-@app.route('/scan', methods=['POST', 'GET'])
+@app.route('/scan', methods=['POST'])
 def scan():
     data = request.json
     print(data)
-    image = io.BytesIO(b64decode(re.sub("data:image/jpeg;base64", '', data["data"])))
+    image = io.BytesIO(bytes(b64decode(re.sub("data:image/jpeg;base64", '', data["data"]))))
     ret = handler.get_data(image)
-    return ret
+    conc = "{}|{}|{}".format(ret["title"], ret["date"], ret["time"])
+    return conc
