@@ -27,7 +27,7 @@ def scan():
     time = ''
     print(dates)
     if len(dates) != 0:
-        date = dates.strftime("%m/%d/%Y")
-        time = dates.strftime("%H:%M:%S")
+        date = dates[0].strftime("%m/%d/%Y")
+        time = dates[0].strftime("%H:%M:%S")
     conc = "&{}|&{}|&{}".format(ret["title"], date, time)
     return conc
