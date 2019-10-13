@@ -12,12 +12,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def hello_world():
     return 'welcome to <strong>seamless.</strong>'
 
-@app.route('/scan/<string:encoding>', methods=['POST'])
+@app.route('/scan/<encoding>', methods=['POST'])
 def scan(encoding):
     print(encoding)
-    return ''
-
-
+    return encoding
 
 
 @app.route('/scan2', methods=['POST'])
