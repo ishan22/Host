@@ -89,7 +89,7 @@ def get_data(input_data):
 
     title = ""
     big_area = 0
-    threshold = 14
+    threshold = 20
     for text_result in get_printed_text_results.recognition_results:
         for line in text_result.lines:
             box = line.bounding_box
