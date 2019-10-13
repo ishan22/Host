@@ -28,8 +28,17 @@
   </div>
 <script>
 function myFunction() {
-  generatecode = blah
-  document.getElementById("party-code").innerHTML = "Hello World";
+  code = getCode();
+  document.getElementById("party-code").innerHTML = code;
+}
+function getCode() {
+   var result = '';
+   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < 5; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
 }
   </script>
 </body>
