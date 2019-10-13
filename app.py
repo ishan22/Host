@@ -21,5 +21,5 @@ def scan():
     data = request.json
     print(data)
     image = io.BytesIO(b64decode(re.sub("data:image/png;base64", '', data["data"])))
-    ret = handler.handle(image)
+    ret = handler.get_data(image)
     return ret
