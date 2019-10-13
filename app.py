@@ -2,6 +2,7 @@ import handler
 import os
 import io
 import re
+import datetime
 
 from base64 import b64decode
 from flask import Flask, url_for, request, redirect
@@ -21,5 +22,8 @@ def scan():
     print(data)
     image = io.BytesIO(bytes(b64decode(re.sub("data:image/jpeg;base64", '', data["data"]))))
     ret = handler.get_data(image)
-    conc = "{}|{}|{}".format(ret["title"], ret["date"], ret["time_range"])
+    print(ret['standard'])
+    date = ret['standard'].date
+    time = ret['standard'].time
+    conc = "&{}|&{}|&{}".format(ret["title"], date, time)
     return conc

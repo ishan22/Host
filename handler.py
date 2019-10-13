@@ -53,7 +53,6 @@ computervision_client = ComputerVisionClient(endpoint_cv, CognitiveServicesCrede
 text_analytics = TextAnalyticsClient(endpoint, credentials=credentials)
 
 def getData(input_data):
-    image_url = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/event-poster-template-e6771eeb0763814b21d0144eb8e91bdb.jpg?ts=1561498807'
     recognize_printed_results = computervision_client.batch_read_file_in_stream(input_data,  raw=True)
 
     # Get the operation location (URL with an ID at the end) from the response
@@ -127,7 +126,7 @@ def getData(input_data):
     new_date += get_day(date) + ' '
     new_date += get_month(date)
     new_date += get_date(date)
-    matches = datefinder.find_dates(date.lower())
+    matches = datefinder.find_dates(new_date.lower())
     e_details['standard'] = matches
     return e_details
 
