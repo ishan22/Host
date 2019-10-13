@@ -19,7 +19,7 @@ def hello_world():
 def scan():
     data = request.json
     print(data)
-    image = BytesIO(b64decode(re.sub("data:image/png;base64", '', data["data"])))
+    image = io.BytesIO(b64decode(re.sub("data:image/png;base64", '', data["data"])))
     print(image)
     #with open("image.png", "wb") as fh:
      #   fh.write(base64.decodebytes(bytes(data["data"])))
