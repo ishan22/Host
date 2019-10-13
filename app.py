@@ -1,8 +1,9 @@
 import handler
-from flask import Flask
+import os
+from flask import Flask, url_for, request, redirect
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = './'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -11,21 +12,24 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def hello_world():
     return 'welcome to <strong>seamless.</strong>'
 
-@app.route('/scan/<path:imgpath>')
-def scan(imgpath):
-    print('imgpath%s'%imgpath)
-    return ''
-
 @app.route('/scan', methods=['POST'])
+def scan():
+    data = request.data
+    print(data)
+    return data
+
+@app.route('/scan2', methods=['POST'])
 def scan_image():
+    print(request.files)
     if 'file' not in request.files:
-        flash('No file part')
         return 'FILE ERR'
-    imgFile = flask.request.files['file']
+    imgFile = request.files['file']
     filename = secure_filename(imgFile.filename)
     print("Uploaded file:%s"%filename)
     imgFile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    imgData = imgFile.getvalue()
+    with open(filename, 'r') as f:
+        imgData = f.getvalue()
+    #imgData = imgFile.getvalue()
     print(imgData)
     details = handler.get_details(imgData)
     return redirect(url_for('upload_file', filename=filename))
