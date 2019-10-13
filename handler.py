@@ -130,8 +130,8 @@ def getData(input_data):
     e_details['standard'] = matches
     return e_details
 
-
 def earlier_time(time):
+
     if "am" in time.lower():
         list_of_words = time.lower().split('am')
         print(list_of_words)
@@ -145,10 +145,9 @@ def earlier_time(time):
         if "pm" in list_of_words[1]:
             return first_am + "am"
         else:
-            return first_am
+            return first_am + "am"
     elif "pm" in time.lower():
         list_of_words = time.lower().split('pm')
-        print(list_of_words)
         first_pm = list_of_words[0].split()[-1]
         if len(list_of_words) == 3:
             second_pm = list_of_words[1].split()[-1]
@@ -157,14 +156,16 @@ def earlier_time(time):
             else:
                 return first_pm + "pm"
         else:
-            return first_pm
+            return  first_pm + "pm"
+    return ""
 
 def get_time(date):
+    print(date)
     date = date.lower()
     fixed_time = 0
     if 'am' in date:
         list_of_words = date.split('am')
-        fixed_time = list_of_words[0].split()[-1]
+        return list_of_words[0].split()[-1] + ' am'
     elif 'pm' in date.lower():
         list_of_words = date.split('pm')
         fixed_time = list_of_words[0].split()[-1]
@@ -174,7 +175,7 @@ def get_time(date):
             return ':'.join(split_time)
         else:
             return int(fixed_time) + 12
-    return fixed_time
+    return ''
 
 def get_day(date):
     days = {
@@ -211,8 +212,10 @@ def get_month(date):
     for month in months:
         for tweak in months[month]:
             if tweak in date:
-                return month
+                return month + ' '
     return ''
+
+
 def get_date(date):
     date = date.lower()
     split_list = date.split()
