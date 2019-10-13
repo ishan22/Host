@@ -21,5 +21,5 @@ def scan():
     print(data)
     image = io.BytesIO(bytes(b64decode(re.sub("data:image/jpeg;base64", '', data["data"]))))
     ret = handler.get_data(image)
-    conc = "&{}|&{}|&{}".format(ret["title"], ret["date"], ret["time_range"])
+    conc = "{}|{}|{}".format(ret["title"], ret["date"], ret["time_range"])
     return conc
