@@ -13,7 +13,7 @@ import requests
 
 API_KEY = 'a6f152d25bd04b25a831b7a17fdfa594'
 ENDPOINT = 'https://seamlessevents.cognitiveservices.azure.com/ocr'
-DIR = '/Users/FareedMabrouk/Desktop/Explore/Coding/DubHacks/Seamless Events/Images/'
+DIR = './Images'
 
 def handler():
     text = ''
